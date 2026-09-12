@@ -348,12 +348,11 @@
 
         <!-- Left Side: Video Preview -->
         <div
-          class="w-full md:w-5/12 lg:w-1/2 bg-gray-900 relative flex items-center justify-center min-h-[250px] md:min-h-full"
+          class="w-full md:w-5/12 lg:w-1/2 bg-gray-900 relative flex items-center justify-center min-h-[250px] md:min-h-full overflow-hidden"
         >
-          <!-- Performance: preload="none" prevents loading until modal is opened -->
           <video
             id="modal-video"
-            class="absolute inset-0 w-full h-full object-cover opacity-80"
+            class="absolute inset-0 w-full h-full object-cover"
             loop
             muted
             playsinline
@@ -361,20 +360,22 @@
           >
             <source src="" type="video/mp4" />
           </video>
+
           <div
-            class="absolute inset-0 bg-gradient-to-t from-gray-900/90 to-transparent pointer-events-none"
-          ></div>
-          <div class="absolute bottom-6 left-6 right-6 text-white z-10">
+            class="absolute bottom-0 left-0 right-0 bg-slate-800/50 backdrop-blur-sm px-6 py-5 text-white z-10 border-t border-slate-700/20"
+          >
+            <!-- (Badge เหลือง) -->
             <span
               id="modal-level"
-              class="inline-flex items-center gap-1.5 px-3 py-1 bg-white/20 rounded-full text-xs font-semibold mb-2"
+              class="inline-flex items-center px-3 py-1 bg-brand-yellow text-slate-900 rounded-full text-xs font-bold mb-2 shadow-sm"
             >
-              <i class="fa-solid fa-star text-brand-yellow"></i>
+              <span id="modal-level-stars"></span>
               <span id="modal-level-text">ระดับ</span>
             </span>
+
             <h3
               id="modal-title-video"
-              class="text-2xl font-bold leading-tight drop-shadow-md"
+              class="text-2xl font-bold leading-tight"
             ></h3>
           </div>
         </div>
@@ -465,6 +466,7 @@
           id: "proj-1",
           category: "scratch",
           level: "Beginner",
+          stars: 1,
           title: "เกมผจญภัยอวกาศ (Space Explorer)",
           shortDesc:
             "เรียนรู้ตรรกะเบื้องต้นผ่านการสร้างเกม Interactive ฝึกกระบวนการคิดอย่างเป็นระบบ",
@@ -497,6 +499,7 @@
           id: "proj-2",
           category: "html-css",
           level: "Intermediate",
+          stars: 2,
           title: "เว็บไซต์แนะนำตัวเอง (Personal Portfolio)",
           shortDesc:
             "สร้างหน้าเว็บ Multi-page ด้วยโครงสร้าง HTML และตกแต่งด้วย CSS พร้อมใส่ลูกเล่น",
@@ -525,6 +528,7 @@
           id: "proj-3",
           category: "python",
           level: "Intermediate",
+          stars: 2,
           title: "โปรแกรมวิเคราะห์ข้อมูล (Data Dashboard)",
           shortDesc:
             "ใช้ Python จัดการข้อมูลจริงและสร้างกราฟสรุปผล เตรียมพร้อมสู่สายงาน Data",
@@ -556,7 +560,8 @@
         {
           id: "proj-4",
           category: "vexcode",
-          level: "All Levels",
+          level: "Advanced",
+          stars: 3,
           title: "หุ่นยนต์หลบหลีกสิ่งกีดขวาง (Smart Rover)",
           shortDesc:
             "เขียนโปรแกรมควบคุมเซนเซอร์ให้หุ่นยนต์สามารถตัดสินใจและเคลื่อนที่อัตโนมัติ",
@@ -593,6 +598,7 @@
           id: "proj-5",
           category: "fullstack",
           level: "Advanced",
+          stars: 3,
           title: "ระบบจัดการร้านค้า (E-Commerce MERN)",
           shortDesc:
             "โปรเจกต์ระดับ Real-world เชื่อมต่อฐานข้อมูล ทำระบบ Login และจัดการสินค้า",
@@ -629,14 +635,15 @@
         {
           id: "proj-6",
           category: "html-css",
-          level: "Beginner/Intermediate",
+          level: "Intermediate",
+          stars: 2,
           title: "เครื่องเล่นเพลงด้วย JavaScript (Music Player)",
           shortDesc:
             "ประยุกต์ความรู้ web development เพื่อสร้างแอปพลิเคชันเครื่องเล่นเพลง ฝึกเขียน JS ควบคุม Audio API และ DOM",
           fullDesc:
             "โปรเจกต์เครื่องเล่นเพลงบนเว็บที่ออกแบบ UI/UX ให้ให้ใช้งานง่ายผ่านสีพาสเทลและปุ่มขนาดใหญ่ รวมถึง CSS แอนิเมชัน โปรเจกต์นี้ทำให้นักเรียนเห็นภาพรวมของระบบ Input (รับคำสั่งจากปุ่ม) -> Process (คำนวณเวลาและสถานะ) -> Output (แสดงภาพแผ่นเสียงหมุนและเล่นเพลงออกมา) ได้อย่างเป็นรูปธรรม โดยใช้ JavaScript และ HTML5 Audio API แบบไม่พึ่งพารายละเอียดที่ซับซ้อน",
           videoUrl:
-            "https://res.cloudinary.com/s0vscy04/video/upload/f_auto,q_auto/v1789193591/P06_s22upq.mp4",
+            "https://res.cloudinary.com/s0vscy04/video/upload/f_auto,q_auto/v1789217247/p06_rpc7ec.mp4",
           thumbnailIcon: "fa-solid fa-music",
           thumbnailBg: "bg-pink-100",
           thumbnailColor: "text-pink-500",
@@ -725,16 +732,34 @@
           let htmlString = "";
           filteredData.forEach((proj) => {
             htmlString += `
-                        <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow group cursor-pointer flex flex-col h-full" onclick="openModal('${proj.id}')">
-                            <div class="h-40 ${proj.thumbnailBg} flex items-center justify-center ${proj.thumbnailColor} text-4xl border-b border-gray-50 relative overflow-hidden shrink-0">
-                                <i class="${proj.thumbnailIcon} relative z-10 group-hover:scale-110 transition-transform duration-300"></i>
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow cursor-pointer flex flex-col h-full" onclick="openModal('${proj.id}')" onmouseenter="playCardVideo(this)" onmouseleave="pauseCardVideo(this)">
+                            
+                            <!-- ส่วนรูปภาพ/วิดีโอ (กำหนด group-video ไว้ควบคุม hover) -->
+                            <div class="h-40 border-b border-gray-50 relative overflow-hidden shrink-0 group/video bg-gray-900">
+                                
+                                <!-- 1. หน้าปก (Icon & สีพื้นหลังเดิม) จะจางหายไปเมื่อ hover -->
+                                <div class="absolute inset-0 z-20 ${proj.thumbnailBg} flex items-center justify-center ${proj.thumbnailColor} text-4xl transition-opacity duration-300 group-hover/video:opacity-0">
+                                    <i class="${proj.thumbnailIcon} transition-transform duration-300 group-hover/video:scale-110"></i>
+                                </div>
+
+                                <!-- 2. วิดีโอ (ซ่อนไว้ก่อน และ preload="none" เพื่อไม่ให้โหลดข้อมูลจนกว่าจะชี้) -->
+                                <video class="card-video absolute inset-0 w-full h-full object-cover opacity-0 group-hover/video:opacity-100 transition-opacity duration-500 scale-105" loop muted playsinline preload="none">
+                                    <source src="${proj.videoUrl}" type="video/mp4">
+                                </video>
+                                
+                                <!-- 3. Badge ไอคอนเล็กๆ มุมขวาบน (โผล่มาตอน hover วิดีโอ) -->
+                                <div class="absolute top-3 right-3 bg-white/90 ${proj.thumbnailColor} w-8 h-8 rounded-full flex items-center justify-center text-sm shadow-md z-30 opacity-0 group-hover/video:opacity-100 transition-opacity duration-300">
+                                    <i class="${proj.thumbnailIcon}"></i>
+                                </div>
+
                             </div>
-                            <div class="p-5 flex flex-col flex-1">
+
+                            <div class="p-5 flex flex-col flex-1 group">
                                 <div class="flex items-center justify-between mb-2">
                                     <span class="text-[10px] font-bold uppercase tracking-wider ${proj.badgeColor} ${proj.badgeBg} px-2 py-0.5 rounded">${proj.badgeText}</span>
-                                    <span class="text-xs text-gray-400"><i class="fa-solid fa-star text-brand-yellow mr-1"></i>${proj.level}</span>
+                                    <span class="text-xs text-gray-400 flex items-center">${getStarsHTML(proj.stars, false)}${proj.level}</span>
                                 </div>
-                                <h4 class="font-bold text-lg mb-2 line-clamp-1 text-gray-800">${proj.title}</h4>
+                                <h4 class="font-bold text-lg mb-2 line-clamp-1 text-gray-800 group-hover:text-brand-teal transition-colors">${proj.title}</h4>
                                 <p class="text-sm text-gray-500 line-clamp-2 mb-4 flex-1">${proj.shortDesc}</p>
                                 <button class="text-sm font-semibold text-brand-teal hover:text-brand-text transition-colors flex items-center gap-1 mt-auto">
                                     ดูรายละเอียด <i class="fa-solid fa-arrow-right text-xs"></i>
@@ -755,6 +780,10 @@
         document.getElementById("modal-title").textContent = proj.title;
         document.getElementById("modal-title-video").textContent = proj.title;
         document.getElementById("modal-desc").textContent = proj.fullDesc;
+        document.getElementById("modal-level-stars").innerHTML = getStarsHTML(
+          proj.stars,
+          true,
+        );
         document.getElementById("modal-level-text").textContent = proj.level;
 
         const badge = document.getElementById("modal-category-badge");
@@ -851,6 +880,46 @@
           renderProjects();
         });
       });
+
+      // --- 7. HOVER VIDEO LOGIC ---
+      function playCardVideo(cardElement) {
+        const video = cardElement.querySelector(".card-video");
+        if (video) {
+          // ถ้าวิดีโอยังไม่เคยถูกโหลดเลย (readyState === 0) ให้สั่งโหลด
+          if (video.readyState === 0) {
+            video.load();
+          }
+          // สั่งเล่น
+          video.play().catch((e) => {
+            // ป้องกัน Error กรณีเบราว์เซอร์บล็อก
+            console.log("Hover auto-play prevented:", e);
+          });
+        }
+      }
+
+      function pauseCardVideo(cardElement) {
+        const video = cardElement.querySelector(".card-video");
+        if (video) {
+          video.pause();
+        }
+      }
+
+      // star rendering function (used in modal and card)
+      function getStarsHTML(starCount, isModal) {
+        // ถ้าอยู่ใน Modal ใช้สีเทาเข้มตัดกับพื้นเหลือง / ถ้าอยู่ในการ์ดปกติใช้สีเหลือง
+        const activeColor = isModal ? "text-slate-700" : "text-brand-yellow";
+        const inactiveColor = isModal ? "text-slate-700/30" : "text-gray-200";
+
+        let html = "";
+        for (let i = 1; i <= 3; i++) {
+          if (i <= starCount) {
+            html += `<i class="fa-solid fa-star ${activeColor} text-[10px]"></i>`;
+          } else {
+            html += `<i class="fa-solid fa-star ${inactiveColor} text-[10px]"></i>`;
+          }
+        }
+        return `<div class="flex items-center gap-0.5 mr-1.5">${html}</div>`;
+      }
 
       // Search Input with Debounce for Performance
       searchInput.addEventListener("input", (e) => {
