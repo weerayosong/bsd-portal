@@ -1,442 +1,730 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="th">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Resource Hints for faster loading -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-    <link rel="preconnect" href="https://unpkg.com">
-    
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+    <link rel="preconnect" href="https://unpkg.com" />
+
     <title>weerayosong | BSD Portal</title>
 
     <!-- Google Fonts: Noto Sans Thai -->
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
 
     <!-- Font Awesome CDN -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
 
     <!-- Tailwind CSS v4 CDN -->
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
 
     <!-- Custom Theme Configuration -->
-    <style type="text/tailwindcss">
-        @theme {
-            --color-brand-text: #51545F;
-            --color-brand-yellow: #FFCD00;
-            --color-brand-light: #FEFAF1;
-            --color-brand-teal: #00C4BA;
-            --color-brand-red: #FA595D;
-            --font-thai: 'Noto Sans Thai', sans-serif;
-        }
-        body {
-            font-family: var(--font-thai);
-            color: var(--color-brand-text);
-            background-color: #F9FAFB; /* Clean light gray background */
-        }
-        .active-filter {
-            background-color: var(--color-brand-teal) !important;
-            color: white !important;
-        }
-        
-        /* Custom Scrollbar for Modal */
-        .modal-scroll::-webkit-scrollbar { width: 6px; }
-        .modal-scroll::-webkit-scrollbar-track { background: #f1f1f1; }
-        .modal-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
-        .modal-scroll::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    <style>
+      :root {
+        --color-brand-text: #51545f;
+        --color-brand-yellow: #ffcd00;
+        --color-brand-light: #fefaf1;
+        --color-brand-teal: #00c4ba;
+        --color-brand-red: #fa595d;
+        --font-thai: "Noto Sans Thai", sans-serif;
+      }
 
-        /* Mascot Animation */
-        @keyframes wiggle-pause {
-            0%, 25%, 100% { transform: rotate(0) scale(1); }
-            5% { transform: rotate(-8deg) scale(1.05); }
-            10% { transform: rotate(8deg) scale(1.05); }
-            15% { transform: rotate(-8deg) scale(1.05); }
-            20% { transform: rotate(8deg) scale(1.05); }
+      body {
+        font-family: var(--font-thai);
+        color: var(--color-brand-text);
+        background-color: #f9fafb; /* Clean light gray background */
+      }
+
+      .active-filter {
+        background-color: var(--color-brand-teal) !important;
+        color: white !important;
+      }
+
+      .text-brand-text {
+        color: var(--color-brand-text);
+      }
+      .text-brand-teal {
+        color: var(--color-brand-teal);
+      }
+      .text-brand-red {
+        color: var(--color-brand-red);
+      }
+      .bg-brand-yellow {
+        background-color: var(--color-brand-yellow);
+      }
+      .bg-brand-light {
+        background-color: var(--color-brand-light);
+      }
+      .bg-brand-teal {
+        background-color: var(--color-brand-teal);
+      }
+      .bg-brand-red {
+        background-color: var(--color-brand-red);
+      }
+
+      /* Custom Scrollbar for Modal */
+      .modal-scroll::-webkit-scrollbar {
+        width: 6px;
+      }
+      .modal-scroll::-webkit-scrollbar-track {
+        background: #f1f1f1;
+      }
+      .modal-scroll::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 10px;
+      }
+      .modal-scroll::-webkit-scrollbar-thumb:hover {
+        background: #94a3b8;
+      }
+
+      /* Mascot Animation */
+      @keyframes wiggle-pause {
+        0%,
+        25%,
+        100% {
+          transform: rotate(0) scale(1);
         }
-        .mascot-anim {
-            animation: wiggle-pause 5s infinite;
-            transform-origin: bottom center;
-            will-change: transform; /* Hardware acceleration hint */
+        5% {
+          transform: rotate(-8deg) scale(1.05);
         }
+        10% {
+          transform: rotate(8deg) scale(1.05);
+        }
+        15% {
+          transform: rotate(-8deg) scale(1.05);
+        }
+        20% {
+          transform: rotate(8deg) scale(1.05);
+        }
+      }
+      .mascot-anim {
+        animation: wiggle-pause 5s infinite;
+        transform-origin: bottom center;
+        will-change: transform; /* Hardware acceleration hint */
+      }
     </style>
-</head>
-<body class="flex h-screen overflow-hidden">
-
+  </head>
+  <body class="flex h-screen overflow-hidden">
     <!-- Mascot (Bottom Right) -->
-    <img src="assets/mascot.png" alt="Mascot" loading="lazy" decoding="async" class="fixed bottom-0 right-4 md:right-8 w-28 md:w-40 z-30 mascot-anim pointer-events-none">
+    <img
+      src="assets/mascot.png"
+      alt="Mascot"
+      loading="lazy"
+      decoding="async"
+      class="fixed bottom-0 right-4 md:right-8 w-28 md:w-40 z-30 mascot-anim pointer-events-none"
+    />
 
     <!-- Mobile Menu Overlay -->
-    <div id="mobile-overlay" class="fixed inset-0 bg-black/50 z-40 hidden transition-opacity duration-300 opacity-0 md:hidden"></div>
+    <div
+      id="mobile-overlay"
+      class="fixed inset-0 bg-black/50 z-40 hidden transition-opacity duration-300 opacity-0 md:hidden"
+    ></div>
 
     <!-- Sidebar Navigation -->
-    <aside id="sidebar" class="w-72 bg-white border-r border-gray-200 flex flex-col h-full fixed inset-y-0 left-0 z-50 transform -translate-x-full transition-transform duration-300 ease-in-out md:relative md:translate-x-0">
-        <div class="p-6 border-b border-gray-100 flex items-center justify-between">
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center overflow-hidden">
-                    <img src="assets/logo.png" alt="Logo" loading="lazy" class="w-full h-full object-cover">
-                </div>
-                <div>
-                    <h1 class="font-bold text-lg leading-tight">BSD Education</h1>
-                    <p class="text-xs text-gray-400">คลังโปรเจกต์สำหรับสอนนักเรียน</p>
-                </div>
-            </div>
-            <!-- Close Sidebar Button (Mobile) -->
-            <button id="close-sidebar-btn" class="md:hidden text-gray-400 hover:text-gray-600">
-                <i class="fa-solid fa-xmark text-xl"></i>
-            </button>
+    <aside
+      id="sidebar"
+      class="w-72 bg-white border-r border-gray-200 flex flex-col h-full fixed inset-y-0 left-0 z-50 transform -translate-x-full transition-transform duration-300 ease-in-out md:relative md:translate-x-0"
+    >
+      <div
+        class="p-6 border-b border-gray-100 flex items-center justify-between"
+      >
+        <div class="flex items-center gap-3">
+          <div
+            class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center overflow-hidden"
+          >
+            <img
+              src="assets/logo.png"
+              alt="Logo"
+              loading="lazy"
+              class="w-full h-full object-cover"
+            />
+          </div>
+          <div>
+            <h1 class="font-bold text-lg leading-tight">BSD Education</h1>
+            <p class="text-xs text-gray-400">คลังโปรเจกต์สำหรับสอนนักเรียน</p>
+          </div>
         </div>
+        <!-- Close Sidebar Button (Mobile) -->
+        <button
+          id="close-sidebar-btn"
+          class="md:hidden text-gray-400 hover:text-gray-600"
+        >
+          <i class="fa-solid fa-xmark text-xl"></i>
+        </button>
+      </div>
 
-        <nav class="flex-1 overflow-y-auto p-4 space-y-2" id="sidebar-nav">
-            <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3 px-3">หมวดหมู่โปรเจกต์</p>
-            <button data-filter="all" class="filter-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors hover:bg-gray-50 active-filter">
-                <i class="fa-solid fa-layer-group w-5 text-center"></i> ทั้งหมด (All)
-            </button>
-            <button data-filter="scratch" class="filter-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors hover:bg-gray-50 text-gray-600">
-                <i class="fa-solid fa-cat w-5 text-center"></i> 1. Scratch & Other
-            </button>
-            <button data-filter="html-css" class="filter-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors hover:bg-gray-50 text-gray-600">
-                <i class="fa-solid fa-code w-5 text-center"></i> 2. HTML/CSS JS
-            </button>
-            <button data-filter="python" class="filter-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors hover:bg-gray-50 text-gray-600">
-                <i class="fa-brands fa-python w-5 text-center"></i> 3. Python
-            </button>
-            <button data-filter="vexcode" class="filter-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors hover:bg-gray-50 text-gray-600">
-                <i class="fa-solid fa-robot w-5 text-center"></i> 4. VexCode VexIQ
-            </button>
-            <button data-filter="fullstack" class="filter-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors hover:bg-gray-50 text-gray-600">
-                <i class="fa-solid fa-server w-5 text-center"></i> 5. Full Stack & DB
-            </button>
-        </nav>
+      <nav class="flex-1 overflow-y-auto p-4 space-y-2" id="sidebar-nav">
+        <p
+          class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3 px-3"
+        >
+          หมวดหมู่โปรเจกต์
+        </p>
+        <button
+          data-filter="all"
+          class="filter-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors hover:bg-gray-50 active-filter"
+        >
+          <i class="fa-solid fa-layer-group w-5 text-center"></i> ทั้งหมด (All)
+        </button>
+        <button
+          data-filter="scratch"
+          class="filter-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors hover:bg-gray-50 text-gray-600"
+        >
+          <i class="fa-solid fa-cat w-5 text-center"></i> 1. Scratch & Other
+        </button>
+        <button
+          data-filter="html-css"
+          class="filter-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors hover:bg-gray-50 text-gray-600"
+        >
+          <i class="fa-solid fa-code w-5 text-center"></i> 2. HTML/CSS JS
+        </button>
+        <button
+          data-filter="python"
+          class="filter-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors hover:bg-gray-50 text-gray-600"
+        >
+          <i class="fa-brands fa-python w-5 text-center"></i> 3. Python
+        </button>
+        <button
+          data-filter="vexcode"
+          class="filter-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors hover:bg-gray-50 text-gray-600"
+        >
+          <i class="fa-solid fa-robot w-5 text-center"></i> 4. VexCode VexIQ
+        </button>
+        <button
+          data-filter="fullstack"
+          class="filter-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors hover:bg-gray-50 text-gray-600"
+        >
+          <i class="fa-solid fa-server w-5 text-center"></i> 5. Full Stack & DB
+        </button>
+      </nav>
 
-        <div class="p-4 border-t border-gray-200">
-            <div class="flex items-center gap-3 px-3 py-2">
-                <div class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden border border-gray-300 shrink-0">
-                    <img src="assets/teacher.jpg" alt="Teacher" loading="lazy" class="w-full h-full object-cover">
-                </div>
-                <div class="flex-1 min-w-0">
-                    <p class="text-sm font-semibold truncate">ครูอ๋อง 
-                        
-                    </p>
-                    <p class="text-xs text-brand-teal">BSD Future Center สระบุรี</p>
-                </div>
-            </div>
+      <div class="p-4 border-t border-gray-200">
+        <div class="flex items-center gap-3 px-3 py-2">
+          <div
+            class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden border border-gray-300 shrink-0"
+          >
+            <img
+              src="assets/teacher.jpg"
+              alt="Teacher"
+              loading="lazy"
+              class="w-full h-full object-cover"
+            />
+          </div>
+          <div class="flex-1 min-w-0">
+            <p class="text-sm font-semibold truncate">ครูอ๋อง</p>
+            <p class="text-xs text-brand-teal">BSD Future Center สระบุรี</p>
+          </div>
         </div>
+      </div>
     </aside>
 
     <!-- Main Content -->
     <main class="flex-1 flex flex-col h-full overflow-hidden">
-        
-        <!-- Topbar -->
-        <header class="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between z-10">
-            <button id="mobile-menu-btn" class="md:hidden text-gray-500 hover:text-brand-text mr-4">
-                <i class="fa-solid fa-bars text-xl"></i>
-            </button>
+      <!-- Topbar -->
+      <header
+        class="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between z-10"
+      >
+        <button
+          id="mobile-menu-btn"
+          class="md:hidden text-gray-500 hover:text-brand-text mr-4"
+        >
+          <i class="fa-solid fa-bars text-xl"></i>
+        </button>
 
-            <div class="flex-1 max-w-2xl relative">
-                <i class="fa-solid fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-                <input type="text" id="search-input" placeholder="ค้นหาโปรเจกต์..." class="w-full bg-gray-50 border border-gray-200 rounded-lg pl-10 pr-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-teal transition-shadow">
-            </div>
-        </header>
-
-        <!-- Scrollable Content Area -->
-        <div class="flex-1 overflow-y-auto p-4 md:p-6 lg:p-8 relative z-10">
-            
-            <!-- Hero / Highlight Banner -->
-            <div class="bg-brand-yellow rounded-2xl p-6 md:p-8 mb-10 flex flex-col md:flex-row items-center justify-between shadow-sm relative overflow-hidden gap-6">
-                <!-- Background decor (Simplified) -->
-                <div class="absolute -top-10 -right-10 w-40 h-40 bg-white/20 rounded-full blur-2xl pointer-events-none"></div>
-                
-                <div class="relative z-10 flex-1">
-                    <span class="inline-block px-3 py-1 bg-white rounded-full text-xs font-bold text-brand-text mb-4 shadow-sm tracking-wider">BSD Future Center สระบุรี</span>
-                    <h2 class="text-2xl md:text-3xl font-bold text-brand-text mb-2">โปรเจคต์สำหรับสอนนักเรียนเพื่อการฝึกประยุกต์ใช้ในชีวิตจริง</h2>
-                    <p class="text-brand-text/80 max-w-xl text-sm leading-relaxed">
-                        โชว์เคสโปรเจกต์ที่ออกแบบมาเพื่อให้นักเรียนได้เรียนรู้ผ่านการลงมือทำจริง (Project-Based Learning) 
-                        เพื่อเป็นแนวทางให้ผู้ปกครองและนักเรียนเลือกเส้นทางการเรียนรู้ที่เหมาะสม
-                    </p>
-                </div>
-                
-                <!-- Logo2 in Banner -->
-                <div class="relative z-10 w-40 md:w-56 shrink-0 bg-white p-3 rounded-xl shadow-sm hidden sm:block">
-                    <img src="assets/logo2.png" alt="BSD Future Center" loading="lazy" class="w-full h-auto object-contain">
-                </div>
-            </div>
-
-            <!-- Projects Header -->
-            <div class="mb-6 flex justify-between items-end border-b border-gray-200 pb-2">
-                <h3 class="text-xl font-bold" id="category-title">โปรเจกต์ทั้งหมด (All Projects)</h3>
-                <span class="text-sm font-medium text-brand-teal bg-brand-teal/10 px-2 py-0.5 rounded" id="project-count"></span>
-            </div>
-
-            <!-- Projects Grid (Padding bottom to prevent hiding behind mascot) -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 pb-24" id="projects-container">
-                <!-- Data rendered by JS -->
-            </div>
-            
-            <!-- Empty State -->
-            <div id="empty-state" class="hidden flex-col items-center justify-center py-20 text-center">
-                <i class="fa-solid fa-folder-open text-6xl text-gray-200 mb-4"></i>
-                <h4 class="text-lg font-bold text-gray-500 mb-1">ไม่พบโปรเจกต์</h4>
-                <p class="text-sm text-gray-400">ลองค้นหาด้วยคำอื่น หรือเลือกหมวดหมู่อื่น</p>
-            </div>
-
+        <div class="flex-1 max-w-2xl relative">
+          <i
+            class="fa-solid fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+          ></i>
+          <input
+            type="text"
+            id="search-input"
+            placeholder="ค้นหาโปรเจกต์..."
+            class="w-full bg-gray-50 border border-gray-200 rounded-lg pl-10 pr-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-teal transition-shadow"
+          />
         </div>
+      </header>
+
+      <!-- Scrollable Content Area -->
+      <div class="flex-1 overflow-y-auto p-4 md:p-6 lg:p-8 relative z-10">
+        <!-- Hero / Highlight Banner -->
+        <div
+          class="bg-brand-yellow rounded-2xl p-6 md:p-8 mb-10 flex flex-col md:flex-row items-center justify-between shadow-sm relative overflow-hidden gap-6"
+        >
+          <!-- Background decor (Simplified) -->
+          <div
+            class="absolute -top-10 -right-10 w-40 h-40 bg-white/20 rounded-full blur-2xl pointer-events-none"
+          ></div>
+
+          <div class="relative z-10 flex-1">
+            <span
+              class="inline-block px-3 py-1 bg-white rounded-full text-xs font-bold text-brand-text mb-4 shadow-sm tracking-wider"
+              >BSD Future Center สระบุรี</span
+            >
+            <h2 class="text-2xl md:text-3xl font-bold text-brand-text mb-2">
+              โปรเจคต์สำหรับสอนนักเรียนเพื่อการฝึกประยุกต์ใช้ในชีวิตจริง
+            </h2>
+            <p class="text-brand-text/80 max-w-xl text-sm leading-relaxed">
+              โชว์เคสโปรเจกต์ที่ออกแบบมาเพื่อให้นักเรียนได้เรียนรู้ผ่านการลงมือทำจริง
+              (Project-Based Learning)
+              เพื่อเป็นแนวทางให้ผู้ปกครองและนักเรียนเลือกเส้นทางการเรียนรู้ที่เหมาะสม
+            </p>
+          </div>
+
+          <!-- Logo2 in Banner -->
+          <div
+            class="relative z-10 w-40 md:w-56 shrink-0 bg-white p-3 rounded-xl shadow-sm hidden sm:block"
+          >
+            <img
+              src="assets/logo2.png"
+              alt="BSD Future Center"
+              loading="lazy"
+              class="w-full h-auto object-contain"
+            />
+          </div>
+        </div>
+
+        <!-- Projects Header -->
+        <div
+          class="mb-6 flex justify-between items-end border-b border-gray-200 pb-2"
+        >
+          <h3 class="text-xl font-bold" id="category-title">
+            โปรเจกต์ทั้งหมด (All Projects)
+          </h3>
+          <span
+            class="text-sm font-medium text-brand-teal bg-brand-teal/10 px-2 py-0.5 rounded"
+            id="project-count"
+          ></span>
+        </div>
+
+        <!-- Projects Grid (Padding bottom to prevent hiding behind mascot) -->
+        <div
+          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 pb-24"
+          id="projects-container"
+        >
+          <!-- Data rendered by JS -->
+        </div>
+
+        <!-- Empty State -->
+        <div
+          id="empty-state"
+          class="hidden flex-col items-center justify-center py-20 text-center"
+        >
+          <i class="fa-solid fa-folder-open text-6xl text-gray-200 mb-4"></i>
+          <h4 class="text-lg font-bold text-gray-500 mb-1">ไม่พบโปรเจกต์</h4>
+          <p class="text-sm text-gray-400">
+            ลองค้นหาด้วยคำอื่น หรือเลือกหมวดหมู่อื่น
+          </p>
+        </div>
+      </div>
     </main>
 
     <!-- Modal / Popup for Project Details -->
-    <div id="project-modal" class="fixed inset-0 z-[60] flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
-        <!-- Backdrop -->
-        <div class="absolute inset-0 bg-black/70" id="modal-backdrop"></div>
-        
-        <!-- Modal Content -->
-        <div class="bg-white w-full max-w-6xl max-h-[95vh] md:max-h-[85vh] mx-4 rounded-2xl shadow-2xl relative z-10 flex flex-col md:flex-row overflow-hidden transform scale-95 transition-transform duration-300" id="modal-panel">
-            
-            <!-- Close Button -->
-            <button id="close-modal-btn" class="absolute top-4 right-4 z-20 w-10 h-10 bg-white rounded-full flex items-center justify-center text-gray-500 hover:text-brand-red shadow-sm transition-colors border border-gray-100">
-                <i class="fa-solid fa-xmark text-xl"></i>
-            </button>
+    <div
+      id="project-modal"
+      class="fixed inset-0 z-[60] flex items-center justify-center hidden opacity-0 transition-opacity duration-300"
+    >
+      <!-- Backdrop -->
+      <div class="absolute inset-0 bg-black/70" id="modal-backdrop"></div>
 
-            <!-- Left Side: Video Preview -->
-            <div class="w-full md:w-5/12 lg:w-1/2 bg-gray-900 relative flex items-center justify-center min-h-[250px] md:min-h-full">
-                <!-- Performance: preload="none" prevents loading until modal is opened -->
-                <video id="modal-video" class="absolute inset-0 w-full h-full object-cover opacity-80" loop muted playsinline preload="none">
-                    <source src="" type="video/mp4">
-                </video>
-                <div class="absolute inset-0 bg-gradient-to-t from-gray-900/90 to-transparent pointer-events-none"></div>
-                <div class="absolute bottom-6 left-6 right-6 text-white z-10">
-                    <span id="modal-level" class="inline-flex items-center gap-1.5 px-3 py-1 bg-white/20 rounded-full text-xs font-semibold mb-2">
-                        <i class="fa-solid fa-star text-brand-yellow"></i> <span id="modal-level-text">ระดับ</span>
-                    </span>
-                    <h3 id="modal-title-video" class="text-2xl font-bold leading-tight drop-shadow-md"></h3>
-                </div>
-            </div>
+      <!-- Modal Content -->
+      <div
+        class="bg-white w-full max-w-6xl max-h-[95vh] md:max-h-[85vh] mx-4 rounded-2xl shadow-2xl relative z-10 flex flex-col md:flex-row overflow-hidden transform scale-95 transition-transform duration-300"
+        id="modal-panel"
+      >
+        <!-- Close Button -->
+        <button
+          id="close-modal-btn"
+          class="absolute top-4 right-4 z-20 w-10 h-10 bg-white rounded-full flex items-center justify-center text-gray-500 hover:text-brand-red shadow-sm transition-colors border border-gray-100"
+        >
+          <i class="fa-solid fa-xmark text-xl"></i>
+        </button>
 
-            <!-- Right Side: Details -->
-            <div class="w-full md:w-7/12 lg:w-1/2 p-6 md:p-8 overflow-y-auto modal-scroll bg-white">
-                
-                <div class="mb-6">
-                    <span id="modal-category-badge" class="text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded inline-block mb-3"></span>
-                    <h2 id="modal-title" class="text-2xl font-bold text-brand-text mb-3"></h2>
-                    <p id="modal-desc" class="text-sm text-gray-600 leading-relaxed"></p>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                    <div>
-                        <h4 class="text-sm font-bold text-brand-text mb-3 flex items-center gap-2">
-                            <i class="fa-solid fa-wrench text-gray-400"></i> เครื่องมือที่ใช้ (Tools)
-                        </h4>
-                        <div id="modal-tools" class="flex flex-wrap gap-2"></div>
-                    </div>
-                    <div>
-                        <h4 class="text-sm font-bold text-brand-text mb-3 flex items-center gap-2">
-                            <i class="fa-solid fa-brain text-gray-400"></i> พื้นฐานที่ประยุกต์ใช้
-                        </h4>
-                        <div id="modal-fundamentals" class="flex flex-wrap gap-2"></div>
-                    </div>
-                </div>
-
-                <div class="mb-8">
-                    <h4 class="text-sm font-bold text-brand-text mb-3 flex items-center gap-2">
-                        <i class="fa-solid fa-check-circle text-brand-teal"></i> สิ่งที่นักเรียนได้เรียนรู้
-                    </h4>
-                    <ul id="modal-learning" class="space-y-2 text-sm text-gray-600"></ul>
-                </div>
-
-                <!-- Action Buttons -->
-                <div class="flex flex-wrap items-center gap-3 pt-6 border-t border-gray-100 mt-auto">
-                    <a href="#" id="modal-live-link" target="_blank" class="flex-1 md:flex-none flex items-center justify-center gap-2 bg-brand-teal hover:bg-teal-600 text-white px-6 py-2.5 rounded-lg font-semibold text-sm transition-colors shadow-sm">
-                        <i class="fa-solid fa-play"></i> Live Demo
-                    </a>
-                    <a href="#" id="modal-repo-link" target="_blank" class="flex-1 md:flex-none flex items-center justify-center gap-2 bg-gray-800 hover:bg-gray-900 text-white px-6 py-2.5 rounded-lg font-semibold text-sm transition-colors shadow-sm">
-                        <i class="fa-brands fa-github"></i> Repository
-                    </a>
-                </div>
-            </div>
+        <!-- Left Side: Video Preview -->
+        <div
+          class="w-full md:w-5/12 lg:w-1/2 bg-gray-900 relative flex items-center justify-center min-h-[250px] md:min-h-full"
+        >
+          <!-- Performance: preload="none" prevents loading until modal is opened -->
+          <video
+            id="modal-video"
+            class="absolute inset-0 w-full h-full object-cover opacity-80"
+            loop
+            muted
+            playsinline
+            preload="none"
+          >
+            <source src="" type="video/mp4" />
+          </video>
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-gray-900/90 to-transparent pointer-events-none"
+          ></div>
+          <div class="absolute bottom-6 left-6 right-6 text-white z-10">
+            <span
+              id="modal-level"
+              class="inline-flex items-center gap-1.5 px-3 py-1 bg-white/20 rounded-full text-xs font-semibold mb-2"
+            >
+              <i class="fa-solid fa-star text-brand-yellow"></i>
+              <span id="modal-level-text">ระดับ</span>
+            </span>
+            <h3
+              id="modal-title-video"
+              class="text-2xl font-bold leading-tight drop-shadow-md"
+            ></h3>
+          </div>
         </div>
+
+        <!-- Right Side: Details -->
+        <div
+          class="w-full md:w-7/12 lg:w-1/2 p-6 md:p-8 overflow-y-auto modal-scroll bg-white"
+        >
+          <div class="mb-6">
+            <span
+              id="modal-category-badge"
+              class="text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded inline-block mb-3"
+            ></span>
+            <h2
+              id="modal-title"
+              class="text-2xl font-bold text-brand-text mb-3"
+            ></h2>
+            <p
+              id="modal-desc"
+              class="text-sm text-gray-600 leading-relaxed"
+            ></p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div>
+              <h4
+                class="text-sm font-bold text-brand-text mb-3 flex items-center gap-2"
+              >
+                <i class="fa-solid fa-wrench text-gray-400"></i>
+                เครื่องมือที่ใช้ (Tools)
+              </h4>
+              <div id="modal-tools" class="flex flex-wrap gap-2"></div>
+            </div>
+            <div>
+              <h4
+                class="text-sm font-bold text-brand-text mb-3 flex items-center gap-2"
+              >
+                <i class="fa-solid fa-brain text-gray-400"></i>
+                พื้นฐานที่ประยุกต์ใช้
+              </h4>
+              <div id="modal-fundamentals" class="flex flex-wrap gap-2"></div>
+            </div>
+          </div>
+
+          <div class="mb-8">
+            <h4
+              class="text-sm font-bold text-brand-text mb-3 flex items-center gap-2"
+            >
+              <i class="fa-solid fa-check-circle text-brand-teal"></i>
+              สิ่งที่นักเรียนได้เรียนรู้
+            </h4>
+            <ul
+              id="modal-learning"
+              class="space-y-2 text-sm text-gray-600"
+            ></ul>
+          </div>
+
+          <!-- Action Buttons -->
+          <div
+            class="flex flex-wrap items-center gap-3 pt-6 border-t border-gray-100 mt-auto"
+          >
+            <a
+              href="#"
+              id="modal-live-link"
+              target="_blank"
+              class="flex-1 md:flex-none flex items-center justify-center gap-2 bg-brand-teal hover:bg-teal-600 text-white px-6 py-2.5 rounded-lg font-semibold text-sm transition-colors shadow-sm"
+            >
+              <i class="fa-solid fa-play"></i> Live Demo
+            </a>
+            <a
+              href="#"
+              id="modal-repo-link"
+              target="_blank"
+              class="flex-1 md:flex-none flex items-center justify-center gap-2 bg-gray-800 hover:bg-gray-900 text-white px-6 py-2.5 rounded-lg font-semibold text-sm transition-colors shadow-sm"
+            >
+              <i class="fa-brands fa-github"></i> Repository
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- MAIN DATA & LOGIC JAVASCRIPT -->
     <script>
-        // --- 1. DATA ARRAY ---
-        const projectsData = [
-            {
-                id: 'proj-1',
-                category: 'scratch',
-                level: 'Beginner',
-                title: 'เกมผจญภัยอวกาศ (Space Explorer)',
-                shortDesc: 'เรียนรู้ตรรกะเบื้องต้นผ่านการสร้างเกม Interactive ฝึกกระบวนการคิดอย่างเป็นระบบ',
-                fullDesc: 'โปรเจกต์นี้ให้นักเรียนได้ออกแบบและพัฒนาเกมแนวผจญภัยอวกาศด้วยตัวเอง ตั้งแต่การวาดตัวละคร การควบคุมการเคลื่อนไหว ไปจนถึงการนับคะแนนและระบบ Game Over เพื่อสร้างความเข้าใจในโครงสร้างของโปรแกรมมิ่ง',
-                videoUrl: 'https://res.cloudinary.com/s0vscy04/video/upload/f_auto,q_auto/v1789136926/vv_gi6tqu.mp4',
-                thumbnailIcon: 'fa-solid fa-gamepad',
-                thumbnailBg: 'bg-[#FEFAF1]',
-                thumbnailColor: 'text-[#00C4BA]',
-                badgeBg: 'bg-[#00C4BA]/10',
-                badgeColor: 'text-[#00C4BA]',
-                badgeText: 'Scratch',
-                tools: ['Scratch 3.0', 'Block-based Code', 'Sprite Editor'],
-                realWorldTech: ['Concepts of Game Loops', 'Event-Driven Programming'],
-                fundamentals: ['Variables (ตัวแปร)', 'Conditionals (เงื่อนไข If-Else)', 'Loops (การทำซ้ำ)'],
-                learningOutcomes: [
-                    'เข้าใจหลักการทำงานที่เป็นลำดับขั้นตอน (Algorithm)',
-                    'ฝึกการแก้ปัญหาเฉพาะหน้าเมื่อพบข้อผิดพลาด (Debugging)',
-                    'ออกแบบ UI/UX พื้นฐานสำหรับเกม'
-                ],
-                repoLink: '#',
-                liveLink: '#'
-            },
-            {
-                id: 'proj-2',
-                category: 'html-css',
-                level: 'Intermediate',
-                title: 'เว็บไซต์แนะนำตัวเอง (Personal Portfolio)',
-                shortDesc: 'สร้างหน้าเว็บ Multi-page ด้วยโครงสร้าง HTML และตกแต่งด้วย CSS พร้อมใส่ลูกเล่น',
-                fullDesc: 'โปรเจกต์สร้างเว็บไซต์ส่วนตัวตั้งแต่เริ่มต้น (From scratch) นักเรียนจะได้เรียนรู้การจัดโครงสร้างเนื้อหา การตกแต่งความสวยงาม และการทำให้เว็บไซต์สามารถแสดงผลได้ทุกหน้าจอ (Responsive Design)',
-                videoUrl: 'https://res.cloudinary.com/s0vscy04/video/upload/f_auto,q_auto/v1789136926/vv_gi6tqu.mp4',
-                thumbnailIcon: 'fa-brands fa-html5',
-                thumbnailBg: 'bg-gray-800',
-                thumbnailColor: 'text-orange-500',
-                badgeBg: 'bg-orange-100',
-                badgeColor: 'text-orange-600',
-                badgeText: 'HTML/CSS JS',
-                tools: ['VS Code', 'HTML5', 'CSS3', 'Vanilla JS'],
-                realWorldTech: ['Responsive Web Design', 'DOM Manipulation'],
-                fundamentals: ['Box Model', 'Flexbox / Grid', 'Semantic Tags'],
-                learningOutcomes: [
-                    'เข้าใจโครงสร้างที่ถูกต้องของหน้าเว็บ (Semantic HTML)',
-                    'สามารถจัด Layout ด้วย CSS Flexbox และ Grid',
-                    'เขียน JavaScript พื้นฐานเพื่อสร้างปฏิสัมพันธ์บนหน้าเว็บ'
-                ],
-                repoLink: '#',
-                liveLink: '#'
-            },
-            {
-                id: 'proj-3',
-                category: 'python',
-                level: 'Intermediate',
-                title: 'โปรแกรมวิเคราะห์ข้อมูล (Data Dashboard)',
-                shortDesc: 'ใช้ Python จัดการข้อมูลจริงและสร้างกราฟสรุปผล เตรียมพร้อมสู่สายงาน Data',
-                fullDesc: 'นำเข้าข้อมูลไฟล์ CSV เพื่อนำมาทำความสะอาด (Data Cleaning) และวิเคราะห์หาผลลัพธ์ นำเสนอในรูปแบบกราฟที่เข้าใจง่าย เป็นการจำลองการทำงานของ Data Analyst ในโลกจริง',
-                videoUrl: 'https://res.cloudinary.com/s0vscy04/video/upload/f_auto,q_auto/v1789136926/vv_gi6tqu.mp4',
-                thumbnailIcon: 'fa-brands fa-python',
-                thumbnailBg: 'bg-[#EFF9F8]',
-                thumbnailColor: 'text-blue-500',
-                badgeBg: 'bg-blue-100',
-                badgeColor: 'text-blue-600',
-                badgeText: 'Python',
-                tools: ['Python 3', 'Pandas', 'Matplotlib', 'Jupyter Notebook'],
-                realWorldTech: ['Data Wrangling', 'Data Visualization'],
-                fundamentals: ['Data Structures (List, Dict)', 'File I/O', 'Functions'],
-                learningOutcomes: [
-                    'การจัดการไฟล์ข้อมูลและการอ่านข้อมูลภายนอก',
-                    'กระบวนการทำความสะอาดข้อมูล (Data Cleaning)',
-                    'การนำเสนอข้อมูลด้วยกราฟชนิดต่างๆ ให้เหมาะสม'
-                ],
-                repoLink: '#',
-                liveLink: '#'
-            },
-            {
-                id: 'proj-4',
-                category: 'vexcode',
-                level: 'All Levels',
-                title: 'หุ่นยนต์หลบหลีกสิ่งกีดขวาง (Smart Rover)',
-                shortDesc: 'เขียนโปรแกรมควบคุมเซนเซอร์ให้หุ่นยนต์สามารถตัดสินใจและเคลื่อนที่อัตโนมัติ',
-                fullDesc: 'บูรณาการความรู้ด้านฮาร์ดแวร์และซอฟต์แวร์เข้าด้วยกัน นักเรียนจะต้องประกอบหุ่นยนต์ VexIQ และเขียนโค้ดเพื่ออ่านค่าจากเซนเซอร์อัลตราโซนิก เพื่อให้หุ่นยนต์วิ่งในเขาวงกตได้โดยไม่ชนกำแพง',
-                videoUrl: 'https://res.cloudinary.com/s0vscy04/video/upload/f_auto,q_auto/v1789136926/vv_gi6tqu.mp4',
-                thumbnailIcon: 'fa-solid fa-robot',
-                thumbnailBg: 'bg-[#FFF7F8]',
-                thumbnailColor: 'text-[#FA595D]',
-                badgeBg: 'bg-red-100',
-                badgeColor: 'text-[#FA595D]',
-                badgeText: 'VexCode VexIQ',
-                tools: ['VexCode IQ (Blocks/C++)', 'VEX Robotics Hardware', 'Ultrasonic Sensor'],
-                realWorldTech: ['Robotics', 'Sensor Integration', 'Autonomous Systems'],
-                fundamentals: ['If-Else Logic', 'While Loops', 'Motor Control'],
-                learningOutcomes: [
-                    'เข้าใจการทำงานร่วมกันระหว่าง Hardware และ Software',
-                    'การคำนวณระยะทางและตั้งค่าตัวแปรจากเซนเซอร์',
-                    'ทักษะการแก้ปัญหาเชิงตรรกะในโลกกายภาพ'
-                ],
-                repoLink: '#',
-                liveLink: '#'
-            },
-            {
-                id: 'proj-5',
-                category: 'fullstack',
-                level: 'Advanced',
-                title: 'ระบบจัดการร้านค้า (E-Commerce MERN)',
-                shortDesc: 'โปรเจกต์ระดับ Real-world เชื่อมต่อฐานข้อมูล ทำระบบ Login และจัดการสินค้า',
-                fullDesc: 'การพัฒนาเว็บแอปพลิเคชันเต็มรูปแบบ ทั้งฝั่งหน้าบ้าน (Frontend) และหลังบ้าน (Backend) รวมถึงการออกแบบฐานข้อมูล เพื่อสร้างระบบร้านค้าออนไลน์ที่มีตะกร้าสินค้าและระบบสมาชิก',
-                videoUrl: 'https://res.cloudinary.com/s0vscy04/video/upload/f_auto,q_auto/v1789136926/vv_gi6tqu.mp4',
-                thumbnailIcon: 'fa-solid fa-database',
-                thumbnailBg: 'bg-gray-900',
-                thumbnailColor: 'text-white',
-                badgeBg: 'bg-purple-100',
-                badgeColor: 'text-purple-600',
-                badgeText: 'Full Stack',
-                tools: ['React.js', 'Node.js / Express', 'MongoDB', 'TailwindCSS'],
-                realWorldTech: ['RESTful APIs', 'JWT Authentication', 'NoSQL Database'],
-                fundamentals: ['Client-Server Architecture', 'CRUD Operations', 'State Management'],
-                learningOutcomes: [
-                    'ความเข้าใจสถาปัตยกรรมระบบแบบ Full Stack',
-                    'การสร้างและใช้งาน API อย่างปลอดภัย',
-                    'การออกแบบโครงสร้างฐานข้อมูล NoSQL เบื้องต้น'
-                ],
-                repoLink: '#',
-                liveLink: '#'
-            }
-        ];
+      // --- 1. DATA ARRAY ---
+      const projectsData = [
+        {
+          id: "proj-1",
+          category: "scratch",
+          level: "Beginner",
+          title: "เกมผจญภัยอวกาศ (Space Explorer)",
+          shortDesc:
+            "เรียนรู้ตรรกะเบื้องต้นผ่านการสร้างเกม Interactive ฝึกกระบวนการคิดอย่างเป็นระบบ",
+          fullDesc:
+            "โปรเจกต์นี้ให้นักเรียนได้ออกแบบและพัฒนาเกมแนวผจญภัยอวกาศด้วยตัวเอง ตั้งแต่การวาดตัวละคร การควบคุมการเคลื่อนไหว ไปจนถึงการนับคะแนนและระบบ Game Over เพื่อสร้างความเข้าใจในโครงสร้างของโปรแกรมมิ่ง",
+          videoUrl:
+            "https://res.cloudinary.com/s0vscy04/video/upload/f_auto,q_auto/v1789136926/vv_gi6tqu.mp4",
+          thumbnailIcon: "fa-solid fa-gamepad",
+          thumbnailBg: "bg-[#FEFAF1]",
+          thumbnailColor: "text-[#00C4BA]",
+          badgeBg: "bg-[#00C4BA]/10",
+          badgeColor: "text-[#00C4BA]",
+          badgeText: "Scratch",
+          tools: ["Scratch 3.0", "Block-based Code", "Sprite Editor"],
+          realWorldTech: ["Concepts of Game Loops", "Event-Driven Programming"],
+          fundamentals: [
+            "Variables (ตัวแปร)",
+            "Conditionals (เงื่อนไข If-Else)",
+            "Loops (การทำซ้ำ)",
+          ],
+          learningOutcomes: [
+            "เข้าใจหลักการทำงานที่เป็นลำดับขั้นตอน (Algorithm)",
+            "ฝึกการแก้ปัญหาเฉพาะหน้าเมื่อพบข้อผิดพลาด (Debugging)",
+            "ออกแบบ UI/UX พื้นฐานสำหรับเกม",
+          ],
+          repoLink: "#",
+          liveLink: "#",
+        },
+        {
+          id: "proj-2",
+          category: "html-css",
+          level: "Intermediate",
+          title: "เว็บไซต์แนะนำตัวเอง (Personal Portfolio)",
+          shortDesc:
+            "สร้างหน้าเว็บ Multi-page ด้วยโครงสร้าง HTML และตกแต่งด้วย CSS พร้อมใส่ลูกเล่น",
+          fullDesc:
+            "โปรเจกต์สร้างเว็บไซต์ส่วนตัวตั้งแต่เริ่มต้น (From scratch) นักเรียนจะได้เรียนรู้การจัดโครงสร้างเนื้อหา การตกแต่งความสวยงาม และการทำให้เว็บไซต์สามารถแสดงผลได้ทุกหน้าจอ (Responsive Design)",
+          videoUrl:
+            "https://res.cloudinary.com/s0vscy04/video/upload/f_auto,q_auto/v1789136926/vv_gi6tqu.mp4",
+          thumbnailIcon: "fa-brands fa-html5",
+          thumbnailBg: "bg-gray-800",
+          thumbnailColor: "text-orange-500",
+          badgeBg: "bg-orange-100",
+          badgeColor: "text-orange-600",
+          badgeText: "HTML/CSS JS",
+          tools: ["VS Code", "HTML5", "CSS3", "Vanilla JS"],
+          realWorldTech: ["Responsive Web Design", "DOM Manipulation"],
+          fundamentals: ["Box Model", "Flexbox / Grid", "Semantic Tags"],
+          learningOutcomes: [
+            "เข้าใจโครงสร้างที่ถูกต้องของหน้าเว็บ (Semantic HTML)",
+            "สามารถจัด Layout ด้วย CSS Flexbox และ Grid",
+            "เขียน JavaScript พื้นฐานเพื่อสร้างปฏิสัมพันธ์บนหน้าเว็บ",
+          ],
+          repoLink: "#",
+          liveLink: "#",
+        },
+        {
+          id: "proj-3",
+          category: "python",
+          level: "Intermediate",
+          title: "โปรแกรมวิเคราะห์ข้อมูล (Data Dashboard)",
+          shortDesc:
+            "ใช้ Python จัดการข้อมูลจริงและสร้างกราฟสรุปผล เตรียมพร้อมสู่สายงาน Data",
+          fullDesc:
+            "นำเข้าข้อมูลไฟล์ CSV เพื่อนำมาทำความสะอาด (Data Cleaning) และวิเคราะห์หาผลลัพธ์ นำเสนอในรูปแบบกราฟที่เข้าใจง่าย เป็นการจำลองการทำงานของ Data Analyst ในโลกจริง",
+          videoUrl:
+            "https://res.cloudinary.com/s0vscy04/video/upload/f_auto,q_auto/v1789136926/vv_gi6tqu.mp4",
+          thumbnailIcon: "fa-brands fa-python",
+          thumbnailBg: "bg-[#EFF9F8]",
+          thumbnailColor: "text-blue-500",
+          badgeBg: "bg-blue-100",
+          badgeColor: "text-blue-600",
+          badgeText: "Python",
+          tools: ["Python 3", "Pandas", "Matplotlib", "Jupyter Notebook"],
+          realWorldTech: ["Data Wrangling", "Data Visualization"],
+          fundamentals: [
+            "Data Structures (List, Dict)",
+            "File I/O",
+            "Functions",
+          ],
+          learningOutcomes: [
+            "การจัดการไฟล์ข้อมูลและการอ่านข้อมูลภายนอก",
+            "กระบวนการทำความสะอาดข้อมูล (Data Cleaning)",
+            "การนำเสนอข้อมูลด้วยกราฟชนิดต่างๆ ให้เหมาะสม",
+          ],
+          repoLink: "#",
+          liveLink: "#",
+        },
+        {
+          id: "proj-4",
+          category: "vexcode",
+          level: "All Levels",
+          title: "หุ่นยนต์หลบหลีกสิ่งกีดขวาง (Smart Rover)",
+          shortDesc:
+            "เขียนโปรแกรมควบคุมเซนเซอร์ให้หุ่นยนต์สามารถตัดสินใจและเคลื่อนที่อัตโนมัติ",
+          fullDesc:
+            "บูรณาการความรู้ด้านฮาร์ดแวร์และซอฟต์แวร์เข้าด้วยกัน นักเรียนจะต้องประกอบหุ่นยนต์ VexIQ และเขียนโค้ดเพื่ออ่านค่าจากเซนเซอร์อัลตราโซนิก เพื่อให้หุ่นยนต์วิ่งในเขาวงกตได้โดยไม่ชนกำแพง",
+          videoUrl:
+            "https://res.cloudinary.com/s0vscy04/video/upload/f_auto,q_auto/v1789136926/vv_gi6tqu.mp4",
+          thumbnailIcon: "fa-solid fa-robot",
+          thumbnailBg: "bg-[#FFF7F8]",
+          thumbnailColor: "text-[#FA595D]",
+          badgeBg: "bg-red-100",
+          badgeColor: "text-[#FA595D]",
+          badgeText: "VexCode VexIQ",
+          tools: [
+            "VexCode IQ (Blocks/C++)",
+            "VEX Robotics Hardware",
+            "Ultrasonic Sensor",
+          ],
+          realWorldTech: [
+            "Robotics",
+            "Sensor Integration",
+            "Autonomous Systems",
+          ],
+          fundamentals: ["If-Else Logic", "While Loops", "Motor Control"],
+          learningOutcomes: [
+            "เข้าใจการทำงานร่วมกันระหว่าง Hardware และ Software",
+            "การคำนวณระยะทางและตั้งค่าตัวแปรจากเซนเซอร์",
+            "ทักษะการแก้ปัญหาเชิงตรรกะในโลกกายภาพ",
+          ],
+          repoLink: "#",
+          liveLink: "#",
+        },
+        {
+          id: "proj-5",
+          category: "fullstack",
+          level: "Advanced",
+          title: "ระบบจัดการร้านค้า (E-Commerce MERN)",
+          shortDesc:
+            "โปรเจกต์ระดับ Real-world เชื่อมต่อฐานข้อมูล ทำระบบ Login และจัดการสินค้า",
+          fullDesc:
+            "การพัฒนาเว็บแอปพลิเคชันเต็มรูปแบบ ทั้งฝั่งหน้าบ้าน (Frontend) และหลังบ้าน (Backend) รวมถึงการออกแบบฐานข้อมูล เพื่อสร้างระบบร้านค้าออนไลน์ที่มีตะกร้าสินค้าและระบบสมาชิก",
+          videoUrl:
+            "https://res.cloudinary.com/s0vscy04/video/upload/f_auto,q_auto/v1789136926/vv_gi6tqu.mp4",
+          thumbnailIcon: "fa-solid fa-database",
+          thumbnailBg: "bg-gray-900",
+          thumbnailColor: "text-white",
+          badgeBg: "bg-purple-100",
+          badgeColor: "text-purple-600",
+          badgeText: "Full Stack",
+          tools: ["React.js", "Node.js / Express", "MongoDB", "TailwindCSS"],
+          realWorldTech: [
+            "RESTful APIs",
+            "JWT Authentication",
+            "NoSQL Database",
+          ],
+          fundamentals: [
+            "Client-Server Architecture",
+            "CRUD Operations",
+            "State Management",
+          ],
+          learningOutcomes: [
+            "ความเข้าใจสถาปัตยกรรมระบบแบบ Full Stack",
+            "การสร้างและใช้งาน API อย่างปลอดภัย",
+            "การออกแบบโครงสร้างฐานข้อมูล NoSQL เบื้องต้น",
+          ],
+          repoLink: "#",
+          liveLink: "#",
+        },
 
-        // --- 2. DOM ELEMENTS ---
-        const container = document.getElementById('projects-container');
-        const searchInput = document.getElementById('search-input');
-        const filterBtns = document.querySelectorAll('.filter-btn');
-        const emptyState = document.getElementById('empty-state');
-        const projectCount = document.getElementById('project-count');
-        const categoryTitle = document.getElementById('category-title');
-        
-        const modal = document.getElementById('project-modal');
-        const modalBackdrop = document.getElementById('modal-backdrop');
-        const modalPanel = document.getElementById('modal-panel');
-        const closeModalBtn = document.getElementById('close-modal-btn');
-        const modalVideo = document.getElementById('modal-video');
+        {
+          id: "proj-6",
+          category: "html-css",
+          level: "Beginner/Intermediate",
+          title: "เครื่องเล่นเพลงด้วย JavaScript (Music Player)",
+          shortDesc:
+            "ประยุกต์ความรู้ web development เพื่อสร้างแอปพลิเคชันเครื่องเล่นเพลง ฝึกเขียน JS ควบคุม Audio API และ DOM",
+          fullDesc:
+            "โปรเจกต์เครื่องเล่นเพลงบนเว็บที่ออกแบบ UI/UX ให้ให้ใช้งานง่ายผ่านสีพาสเทลและปุ่มขนาดใหญ่ รวมถึง CSS แอนิเมชัน โปรเจกต์นี้ทำให้นักเรียนเห็นภาพรวมของระบบ Input (รับคำสั่งจากปุ่ม) -> Process (คำนวณเวลาและสถานะ) -> Output (แสดงภาพแผ่นเสียงหมุนและเล่นเพลงออกมา) ได้อย่างเป็นรูปธรรม โดยใช้ JavaScript และ HTML5 Audio API แบบไม่พึ่งพารายละเอียดที่ซับซ้อน",
+          videoUrl:
+            "https://res.cloudinary.com/s0vscy04/video/upload/f_auto,q_auto/v1789193591/P06_s22upq.mp4",
+          thumbnailIcon: "fa-solid fa-music",
+          thumbnailBg: "bg-pink-100",
+          thumbnailColor: "text-pink-500",
+          badgeBg: "bg-pink-100",
+          badgeColor: "text-pink-600",
+          badgeText: "HTML/CSS JS",
+          tools: [
+            "HTML5 Audio API",
+            "CSS3 (Flexbox/Keyframes)",
+            "Vanilla JavaScript",
+            "Google Fonts",
+          ],
+          realWorldTech: [
+            "DOM Manipulation",
+            "Event-Driven Programming",
+            "State Management",
+          ],
+          fundamentals: [
+            "Event Listeners (Click, Timeupdate)",
+            "Math Logic (Math.floor, %)",
+            "Boolean Variables",
+          ],
+          learningOutcomes: [
+            "เข้าใจสถาปัตยกรรมโปรแกรมแบบ Input -> Process -> Output ได้อย่างชัดเจนผ่านเสียงและภาพ",
+            "การประยุกต์ใช้คณิตศาสตร์ (Math Logic) ในโค้ด เช่น การแปลงหน่วยวินาทีดิบให้กลายเป็นรูปแบบ นาที:วินาที",
+            "การจัดการสถานะการทำงานของโปรแกรม (State Management) โดยใช้ตัวแปร Boolean เช็คว่าเพลงกำลังเล่น (isPlaying) อยู่หรือไม่",
+            "เรียนรู้คำสั่งการควบคุมไฟล์สื่อ (Audio Elements) เช่น play(), pause(), currentTime",
+            "การออกแบบ UI/UX เชิงจิตวิทยาสำหรับเด็ก (Hover effects ที่มี Interaction ตอบสนองทันที, การเลือกชุดสีที่เหมาะสม)",
+          ],
+          repoLink: "https://github.com/weerayosong/lesson-music-player",
+          liveLink: "https://lesson-music-player-orpin.vercel.app",
+        },
+      ];
 
-        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-        const closeSidebarBtn = document.getElementById('close-sidebar-btn');
-        const sidebar = document.getElementById('sidebar');
-        const mobileOverlay = document.getElementById('mobile-overlay');
+      // --- 2. DOM ELEMENTS ---
+      const container = document.getElementById("projects-container");
+      const searchInput = document.getElementById("search-input");
+      const filterBtns = document.querySelectorAll(".filter-btn");
+      const emptyState = document.getElementById("empty-state");
+      const projectCount = document.getElementById("project-count");
+      const categoryTitle = document.getElementById("category-title");
 
-        let currentFilter = 'all';
-        let currentSearch = '';
-        let searchTimeout = null;
+      const modal = document.getElementById("project-modal");
+      const modalBackdrop = document.getElementById("modal-backdrop");
+      const modalPanel = document.getElementById("modal-panel");
+      const closeModalBtn = document.getElementById("close-modal-btn");
+      const modalVideo = document.getElementById("modal-video");
 
-        const categoryTitles = {
-            'all': 'โปรเจกต์ทั้งหมด (All Projects)',
-            'scratch': '1. Scratch & Other',
-            'html-css': '2. HTML/CSS JS Based',
-            'python': '3. Python',
-            'vexcode': '4. VexCode VexIQ',
-            'fullstack': '5. Full Stack and DB'
-        };
+      const mobileMenuBtn = document.getElementById("mobile-menu-btn");
+      const closeSidebarBtn = document.getElementById("close-sidebar-btn");
+      const sidebar = document.getElementById("sidebar");
+      const mobileOverlay = document.getElementById("mobile-overlay");
 
-        // --- 3. RENDERING LOGIC ---
-        function renderProjects() {
-            const filteredData = projectsData.filter(p => {
-                const matchCat = currentFilter === 'all' || p.category === currentFilter;
-                const matchSearch = p.title.toLowerCase().includes(currentSearch) || p.shortDesc.toLowerCase().includes(currentSearch);
-                return matchCat && matchSearch;
-            });
+      let currentFilter = "all";
+      let currentSearch = "";
+      let searchTimeout = null;
 
-            projectCount.textContent = `${filteredData.length} รายการ`;
+      const categoryTitles = {
+        all: "โปรเจกต์ทั้งหมด (All Projects)",
+        scratch: "1. Scratch & Other",
+        "html-css": "2. HTML/CSS JS Based",
+        python: "3. Python",
+        vexcode: "4. VexCode VexIQ",
+        fullstack: "5. Full Stack and DB",
+      };
 
-            if (filteredData.length === 0) {
-                container.innerHTML = '';
-                emptyState.style.display = 'flex';
-            } else {
-                emptyState.style.display = 'none';
-                // Build string instead of multiple DOM insertions for better performance
-                let htmlString = '';
-                filteredData.forEach(proj => {
-                    htmlString += `
+      // --- 3. RENDERING LOGIC ---
+      function renderProjects() {
+        const filteredData = projectsData.filter((p) => {
+          const matchCat =
+            currentFilter === "all" || p.category === currentFilter;
+          const matchSearch =
+            p.title.toLowerCase().includes(currentSearch) ||
+            p.shortDesc.toLowerCase().includes(currentSearch);
+          return matchCat && matchSearch;
+        });
+
+        projectCount.textContent = `${filteredData.length} รายการ`;
+
+        if (filteredData.length === 0) {
+          container.innerHTML = "";
+          emptyState.style.display = "flex";
+        } else {
+          emptyState.style.display = "none";
+          // Build string instead of multiple DOM insertions for better performance
+          let htmlString = "";
+          filteredData.forEach((proj) => {
+            htmlString += `
                         <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow group cursor-pointer flex flex-col h-full" onclick="openModal('${proj.id}')">
                             <div class="h-40 ${proj.thumbnailBg} flex items-center justify-center ${proj.thumbnailColor} text-4xl border-b border-gray-50 relative overflow-hidden shrink-0">
                                 <i class="${proj.thumbnailIcon} relative z-10 group-hover:scale-110 transition-transform duration-300"></i>
@@ -454,111 +742,133 @@
                             </div>
                         </div>
                     `;
-                });
-                container.innerHTML = htmlString;
-            }
+          });
+          container.innerHTML = htmlString;
         }
+      }
 
-        // --- 4. MODAL LOGIC ---
-        function openModal(id) {
-            const proj = projectsData.find(p => p.id === id);
-            if (!proj) return;
+      // --- 4. MODAL LOGIC ---
+      function openModal(id) {
+        const proj = projectsData.find((p) => p.id === id);
+        if (!proj) return;
 
-            document.getElementById('modal-title').textContent = proj.title;
-            document.getElementById('modal-title-video').textContent = proj.title;
-            document.getElementById('modal-desc').textContent = proj.fullDesc;
-            document.getElementById('modal-level-text').textContent = proj.level;
-            
-            const badge = document.getElementById('modal-category-badge');
-            badge.textContent = proj.badgeText;
-            badge.className = `text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded inline-block mb-3 ${proj.badgeColor} ${proj.badgeBg}`;
-            
-            // Set source and play only when modal opens
-            modalVideo.src = proj.videoUrl;
-            modalVideo.play().catch(e => console.log("Video autoplay blocked:", e));
+        document.getElementById("modal-title").textContent = proj.title;
+        document.getElementById("modal-title-video").textContent = proj.title;
+        document.getElementById("modal-desc").textContent = proj.fullDesc;
+        document.getElementById("modal-level-text").textContent = proj.level;
 
-            const mapChips = (arr, colorClass) => arr.map(item => `<span class="px-2.5 py-1 bg-gray-100 ${colorClass} text-xs font-medium rounded-md">${item}</span>`).join('');
-            const mapList = (arr) => arr.map(item => `<li class="flex items-start gap-2"><i class="fa-solid fa-check text-brand-teal mt-1 text-[10px]"></i><span>${item}</span></li>`).join('');
+        const badge = document.getElementById("modal-category-badge");
+        badge.textContent = proj.badgeText;
+        badge.className = `text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded inline-block mb-3 ${proj.badgeColor} ${proj.badgeBg}`;
 
-            document.getElementById('modal-tools').innerHTML = mapChips([...proj.tools, ...proj.realWorldTech], 'text-gray-700');
-            document.getElementById('modal-fundamentals').innerHTML = mapChips(proj.fundamentals, 'text-gray-700');
-            document.getElementById('modal-learning').innerHTML = mapList(proj.learningOutcomes);
+        // Set source and play only when modal opens
+        modalVideo.src = proj.videoUrl;
+        modalVideo
+          .play()
+          .catch((e) => console.log("Video autoplay blocked:", e));
 
-            document.getElementById('modal-live-link').href = proj.liveLink;
-            document.getElementById('modal-repo-link').href = proj.repoLink;
+        const mapChips = (arr, colorClass) =>
+          arr
+            .map(
+              (item) =>
+                `<span class="px-2.5 py-1 bg-gray-100 ${colorClass} text-xs font-medium rounded-md">${item}</span>`,
+            )
+            .join("");
+        const mapList = (arr) =>
+          arr
+            .map(
+              (item) =>
+                `<li class="flex items-start gap-2"><i class="fa-solid fa-check text-brand-teal mt-1 text-[10px]"></i><span>${item}</span></li>`,
+            )
+            .join("");
 
-            modal.classList.remove('hidden');
-            void modal.offsetWidth; // Force Reflow
-            modal.classList.remove('opacity-0');
-            modalPanel.classList.remove('scale-95');
-            modalPanel.classList.add('scale-100');
+        document.getElementById("modal-tools").innerHTML = mapChips(
+          [...proj.tools, ...proj.realWorldTech],
+          "text-gray-700",
+        );
+        document.getElementById("modal-fundamentals").innerHTML = mapChips(
+          proj.fundamentals,
+          "text-gray-700",
+        );
+        document.getElementById("modal-learning").innerHTML = mapList(
+          proj.learningOutcomes,
+        );
+
+        document.getElementById("modal-live-link").href = proj.liveLink;
+        document.getElementById("modal-repo-link").href = proj.repoLink;
+
+        modal.classList.remove("hidden");
+        void modal.offsetWidth; // Force Reflow
+        modal.classList.remove("opacity-0");
+        modalPanel.classList.remove("scale-95");
+        modalPanel.classList.add("scale-100");
+      }
+
+      function closeModal() {
+        modal.classList.add("opacity-0");
+        modalPanel.classList.remove("scale-100");
+        modalPanel.classList.add("scale-95");
+
+        setTimeout(() => {
+          modal.classList.add("hidden");
+          modalVideo.pause();
+          modalVideo.removeAttribute("src"); // Clean memory
+          modalVideo.load();
+        }, 300);
+      }
+
+      // --- 5. MOBILE MENU LOGIC ---
+      function toggleMobileMenu() {
+        const isOpen = !sidebar.classList.contains("-translate-x-full");
+        if (isOpen) {
+          sidebar.classList.add("-translate-x-full");
+          mobileOverlay.classList.remove("opacity-100");
+          mobileOverlay.classList.add("opacity-0");
+          setTimeout(() => mobileOverlay.classList.add("hidden"), 300);
+        } else {
+          mobileOverlay.classList.remove("hidden");
+          void mobileOverlay.offsetWidth;
+          mobileOverlay.classList.remove("opacity-0");
+          mobileOverlay.classList.add("opacity-100");
+          sidebar.classList.remove("-translate-x-full");
         }
+      }
 
-        function closeModal() {
-            modal.classList.add('opacity-0');
-            modalPanel.classList.remove('scale-100');
-            modalPanel.classList.add('scale-95');
-            
-            setTimeout(() => {
-                modal.classList.add('hidden');
-                modalVideo.pause();
-                modalVideo.removeAttribute('src'); // Clean memory
-                modalVideo.load();
-            }, 300);
-        }
+      // --- 6. EVENT LISTENERS ---
+      filterBtns.forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          filterBtns.forEach((b) => {
+            b.classList.remove("active-filter");
+            b.classList.add("text-gray-600");
+          });
+          e.currentTarget.classList.add("active-filter");
+          e.currentTarget.classList.remove("text-gray-600");
 
-        // --- 5. MOBILE MENU LOGIC ---
-        function toggleMobileMenu() {
-            const isOpen = !sidebar.classList.contains('-translate-x-full');
-            if (isOpen) {
-                sidebar.classList.add('-translate-x-full');
-                mobileOverlay.classList.remove('opacity-100');
-                mobileOverlay.classList.add('opacity-0');
-                setTimeout(() => mobileOverlay.classList.add('hidden'), 300);
-            } else {
-                mobileOverlay.classList.remove('hidden');
-                void mobileOverlay.offsetWidth;
-                mobileOverlay.classList.remove('opacity-0');
-                mobileOverlay.classList.add('opacity-100');
-                sidebar.classList.remove('-translate-x-full');
-            }
-        }
+          currentFilter = e.currentTarget.getAttribute("data-filter");
+          categoryTitle.textContent = categoryTitles[currentFilter];
 
-        // --- 6. EVENT LISTENERS ---
-        filterBtns.forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                filterBtns.forEach(b => {
-                    b.classList.remove('active-filter');
-                    b.classList.add('text-gray-600');
-                });
-                e.currentTarget.classList.add('active-filter');
-                e.currentTarget.classList.remove('text-gray-600');
-
-                currentFilter = e.currentTarget.getAttribute('data-filter');
-                categoryTitle.textContent = categoryTitles[currentFilter];
-                
-                if(window.innerWidth < 768) toggleMobileMenu();
-                renderProjects();
-            });
+          if (window.innerWidth < 768) toggleMobileMenu();
+          renderProjects();
         });
+      });
 
-        // Search Input with Debounce for Performance
-        searchInput.addEventListener('input', (e) => {
-            clearTimeout(searchTimeout);
-            searchTimeout = setTimeout(() => {
-                currentSearch = e.target.value.toLowerCase().trim();
-                renderProjects();
-            }, 300); // Wait 300ms before re-rendering
-        });
+      // Search Input with Debounce for Performance
+      searchInput.addEventListener("input", (e) => {
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(() => {
+          currentSearch = e.target.value.toLowerCase().trim();
+          renderProjects();
+        }, 300); // Wait 300ms before re-rendering
+      });
 
-        closeModalBtn.addEventListener('click', closeModal);
-        modalBackdrop.addEventListener('click', closeModal);
-        mobileMenuBtn.addEventListener('click', toggleMobileMenu);
-        closeSidebarBtn.addEventListener('click', toggleMobileMenu);
-        mobileOverlay.addEventListener('click', toggleMobileMenu);
+      closeModalBtn.addEventListener("click", closeModal);
+      modalBackdrop.addEventListener("click", closeModal);
+      mobileMenuBtn.addEventListener("click", toggleMobileMenu);
+      closeSidebarBtn.addEventListener("click", toggleMobileMenu);
+      mobileOverlay.addEventListener("click", toggleMobileMenu);
 
-        // INITIALIZE
-        renderProjects();
+      // INITIALIZE
+      renderProjects();
     </script>
-</body>
+  </body>
 </html>
