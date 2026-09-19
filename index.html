@@ -154,7 +154,9 @@
           </div>
           <div>
             <h1 class="font-bold text-lg leading-tight">BSD Education</h1>
-            <p class="text-xs text-gray-400">คลังโปรเจกต์สำหรับสอนและผลงานนักเรียน</p>
+            <p class="text-xs text-gray-400">
+              คลังโปรเจกต์สำหรับสอนและผลงานนักเรียน
+            </p>
           </div>
         </div>
         <!-- Close Sidebar Button (Mobile) -->
@@ -213,7 +215,8 @@
           href="https://wc-psi.vercel.app/"
           class="filter-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors hover:bg-gray-50 text-gray-600"
         >
-          <i class="fa-solid fa-graduation-cap w-5 text-center"></i> WC Curriculum Preview
+          <i class="fa-solid fa-graduation-cap w-5 text-center"></i> WC
+          Curriculum Preview
         </a>
       </nav>
 
@@ -277,7 +280,7 @@
       <div class="flex-1 overflow-y-auto p-4 md:p-6 lg:p-8 relative z-10">
         <!-- Hero / Highlight Banner -->
         <div
-          class="bg-brand-yellow rounded-2xl p-6 md:p-8 mb-10 flex flex-col md:flex-row items-center justify-between shadow-sm relative overflow-hidden gap-6"
+          class="bg-brand-yellow rounded-2xl p-6 md:p-8 mb-10 flex flex-col lg:flex-row items-center justify-between shadow-sm relative overflow-hidden gap-6"
         >
           <!-- Background decor (Simplified) -->
           <div
@@ -290,7 +293,8 @@
               >BSD Future Center สระบุรี</span
             >
             <h2 class="text-2xl md:text-3xl font-bold text-brand-text mb-2">
-              โปรเจคต์สำหรับสอนและผลงานนักเรียน เพื่อการฝึกประยุกต์ใช้ในชีวิตจริง
+              โปรเจคต์สำหรับสอนและผลงานนักเรียน
+              เพื่อการฝึกประยุกต์ใช้ในชีวิตจริง
             </h2>
             <p class="text-brand-text/80 max-w-xl text-sm leading-relaxed">
               โชว์เคสโปรเจกต์ที่ออกแบบมาเพื่อให้นักเรียนได้เรียนรู้ผ่านการลงมือทำจริง
@@ -387,7 +391,7 @@
       </div>
     </main>
 
-    <!-- Modal / Popup for Project Details -->
+    <!-- Modal -->
     <div
       id="project-modal"
       class="fixed inset-0 z-[60] flex items-center justify-center hidden opacity-0 transition-opacity duration-300"
@@ -395,12 +399,11 @@
       <!-- Backdrop -->
       <div class="absolute inset-0 bg-black/70" id="modal-backdrop"></div>
 
-      <!-- Modal Content -->
+      <!-- Modal Content (เปลี่ยนจาก md:flex-row เป็น lg:flex-row) -->
       <div
-        class="bg-white w-full max-w-6xl max-h-[95vh] md:max-h-[85vh] mx-4 rounded-2xl shadow-2xl relative z-10 flex flex-col md:flex-row overflow-hidden transform scale-95 transition-transform duration-300"
+        class="bg-white w-full max-w-7xl max-h-[95vh] lg:max-h-[90vh] mx-4 rounded-2xl shadow-2xl relative z-10 flex flex-col lg:flex-row overflow-hidden transform scale-95 transition-transform duration-300"
         id="modal-panel"
       >
-        <!-- Close Button -->
         <button
           id="close-modal-btn"
           class="absolute top-4 right-4 z-20 w-10 h-10 bg-white rounded-full flex items-center justify-center text-gray-500 hover:text-brand-red shadow-sm transition-colors border border-gray-100"
@@ -408,13 +411,14 @@
           <i class="fa-solid fa-xmark text-xl"></i>
         </button>
 
-        <!-- Left Side: Video Preview -->
+        <!-- Left Side: Video -->
         <div
-          class="w-full md:w-5/12 lg:w-1/2 bg-gray-900 relative flex items-center justify-center min-h-[250px] md:min-h-full overflow-hidden"
+          class="w-full lg:w-3/5 bg-gray-900 relative flex items-center justify-center aspect-video sm:min-h-[280px] lg:aspect-auto lg:min-h-full overflow-hidden shrink-0 lg:cursor-pointer group/expand"
+          onclick="openFullscreenVideo()"
         >
           <video
             id="modal-video"
-            class="absolute inset-0 w-full h-full object-cover"
+            class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 lg:group-hover/expand:scale-105"
             loop
             muted
             playsinline
@@ -424,27 +428,31 @@
           </video>
 
           <div
-            class="absolute bottom-0 left-0 right-0 bg-slate-800/50 backdrop-blur-sm px-6 py-5 text-white z-10 border-t border-slate-700/20"
+            class="hidden lg:flex absolute top-4 left-4 bg-white/20 backdrop-blur-md px-3 py-1.5 rounded-full text-white text-sm font-medium z-20 pointer-events-none items-center gap-2 shadow-sm border border-white/30 opacity-80 group-hover/expand:opacity-100 transition-opacity"
           >
-            <!-- (Badge เหลือง) -->
+            <i class="fa-solid fa-expand"></i> คลิกเพื่อดูพรีวิวขนาดเต็มจอ
+          </div>
+
+          <div
+            class="absolute bottom-0 left-0 right-0 p-3 lg:bg-slate-800/90 lg:backdrop-blur-sm lg:px-6 lg:py-5 text-white z-10 lg:border-t lg:border-slate-700/50"
+          >
             <span
               id="modal-level"
-              class="inline-flex items-center px-3 py-1 bg-brand-yellow text-slate-900 rounded-full text-xs font-bold mb-2 shadow-sm"
+              class="inline-flex items-center px-2 py-0.5 lg:px-3 lg:py-1 bg-brand-yellow text-slate-900 rounded-full text-[10px] lg:text-xs font-bold mb-0 lg:mb-2 shadow-sm"
             >
               <span id="modal-level-stars"></span>
-              <span id="modal-level-text">ระดับ</span>
+              <span id="modal-level-text" class="ml-1 lg:ml-1.5">ระดับ</span>
             </span>
-
             <h3
               id="modal-title-video"
-              class="text-2xl font-bold leading-tight"
+              class="hidden lg:block text-2xl font-bold leading-tight lg:line-clamp-2"
             ></h3>
           </div>
         </div>
 
-        <!-- Right Side: Details -->
+        <!-- Right Side: Details (ปรับจาก md:w-1/2 เป็น lg:w-2/5) -->
         <div
-          class="w-full md:w-7/12 lg:w-1/2 p-6 md:p-8 overflow-y-auto modal-scroll bg-white"
+          class="w-full lg:w-2/5 p-6 lg:p-8 overflow-y-auto modal-scroll bg-white"
         >
           <div class="mb-6">
             <span
@@ -461,7 +469,9 @@
             ></p>
           </div>
 
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+          <div
+            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-6 mb-8"
+          >
             <div>
               <h4
                 class="text-sm font-bold text-brand-text mb-3 flex items-center gap-2"
@@ -495,7 +505,6 @@
             ></ul>
           </div>
 
-          <!-- Action Buttons -->
           <div
             class="flex flex-wrap items-center gap-3 pt-6 border-t border-gray-100 mt-auto"
           >
@@ -520,6 +529,39 @@
       </div>
     </div>
 
+    <!-- Fullscreen Video Modal -->
+    <div
+      id="fullscreen-modal"
+      class="fixed inset-0 z-[70] flex items-center justify-center hidden opacity-0 transition-opacity duration-300 bg-black/95"
+      onclick="closeFullscreenVideo()"
+    >
+      <!-- ปุ่มปิด (มุมขวาบน) -->
+      <button
+        type="button"
+        class="absolute top-4 right-4 md:top-6 md:right-6 z-20 w-10 h-10 md:w-12 md:h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white shadow-sm transition-colors border border-white/20 pointer-events-none"
+      >
+        <i class="fa-solid fa-xmark text-xl md:text-2xl"></i>
+      </button>
+
+      <!-- กล่องใส่วิดีโอ -->
+      <div
+        class="w-full h-full max-w-7xl max-h-screen p-2 md:p-12 flex items-center justify-center relative"
+        onclick="event.stopPropagation()"
+      >
+        <!-- play muted -->
+        <video
+          id="fs-video"
+          class="w-full h-full object-contain shadow-2xl rounded-lg bg-black"
+          controls
+          muted
+          playsinline
+          preload="none"
+        >
+          <source src="" type="video/mp4" />
+        </video>
+      </div>
+    </div>
+
     <!-- MAIN DATA & LOGIC JAVASCRIPT -->
     <script>
       // --- 1. DATA ARRAY ---
@@ -535,7 +577,7 @@
           fullDesc:
             "โปรเจกต์นี้ให้นักเรียนได้ออกแบบและพัฒนาเกมแนวผจญภัยอวกาศด้วยตัวเอง ตั้งแต่การวาดตัวละคร การควบคุมการเคลื่อนไหว ไปจนถึงการนับคะแนนและระบบ Game Over เพื่อสร้างความเข้าใจในโครงสร้างของโปรแกรมมิ่ง",
           videoUrl:
-            "https://res.cloudinary.com/s0vscy04/video/upload/f_auto,q_auto/v1789748388/p01_mjhseu.mp4",
+            "https://res.cloudinary.com/s0vscy04/video/upload/f_auto,q_auto/v1789838406/p01_otrgbf.mp4",
           thumbnailIcon: "fa-solid fa-cat",
           thumbnailBg: "bg-yellow-50",
           thumbnailColor: "text-yellow-500",
@@ -616,8 +658,10 @@
             "กระบวนการทำความสะอาดข้อมูล (Data Cleaning)",
             "การนำเสนอข้อมูลด้วยกราฟชนิดต่างๆ ให้เหมาะสม",
           ],
-          repoLink: "https://colab.research.google.com/drive/1x2jwAFGl8DvUxR7TBXKiiEYV8J4VKISo?usp=sharing",
-          liveLink: "https://colab.research.google.com/drive/1x2jwAFGl8DvUxR7TBXKiiEYV8J4VKISo?usp=sharing",
+          repoLink:
+            "https://colab.research.google.com/drive/1x2jwAFGl8DvUxR7TBXKiiEYV8J4VKISo?usp=sharing",
+          liveLink:
+            "https://colab.research.google.com/drive/1x2jwAFGl8DvUxR7TBXKiiEYV8J4VKISo?usp=sharing",
         },
         {
           id: "proj-4",
@@ -744,11 +788,12 @@
           category: "fullstack",
           level: "Advanced",
           stars: 3,
-          title: "ระบบจัดการห้องอุปกรณ์เคมีโรงเรียน (Full Stack Chemistry Inventory)",
+          title:
+            "ระบบจัดการห้องเคมีโรงเรียน (Full Stack Chemistry Inventory)",
           shortDesc:
-            "Web Application แบบ Full Stack สไตล์ Enterprise SaaS สำหรับจัดการสต็อกห้องอุปกรณ์เคมีโรงเรียน",
+            "Web Application แบบ Full Stack สไตล์ Enterprise SaaS สำหรับจัดการสต็อกห้องเคมีโรงเรียน",
           fullDesc:
-            "โปรเจกต์ระบบจัดการทรัพยากรในห้องอุปกรณ์เคมีโรงเรียนในรูปแบบ Single Page Application (SPA) ออกแบบ UI/UX ให้มีความเรียบง่าย สบายตา รองรับ Responsive Design และระบบ Dark Mode ขับเคลื่อนการทำงานหลังบ้านด้วยสถาปัตยกรรม Vercel Serverless Functions และฐานข้อมูล Cloud SQLite (Turso) รองรับการจัดการข้อมูล (CRUD) เต็มรูปแบบ พร้อมระบบคำนวณแจ้งเตือนสต็อกต่ำอัตโนมัติ และฟีเจอร์ดาวน์โหลดรายงานเป็นไฟล์ CSV",
+            "โปรเจกต์ระบบจัดการทรัพยากรในห้องเคมีโรงเรียน ในรูปแบบ Single Page Application (SPA) ออกแบบ UI/UX ให้มีความเรียบง่าย สบายตา รองรับ Responsive Design และระบบ Dark Mode ขับเคลื่อนการทำงานหลังบ้านด้วยสถาปัตยกรรม Vercel Serverless Functions และฐานข้อมูล Cloud SQLite (Turso) รองรับการจัดการข้อมูล (CRUD) เต็มรูปแบบ พร้อมระบบคำนวณแจ้งเตือนสต็อกต่ำอัตโนมัติ และฟีเจอร์ดาวน์โหลดรายงานเป็นไฟล์ CSV",
           videoUrl:
             "https://res.cloudinary.com/s0vscy04/video/upload/f_auto,q_auto/v1789745545/p07_brl2s2.mp4",
           thumbnailIcon: "fa-solid fa-server",
@@ -1022,6 +1067,47 @@
           modalVideo.pause();
           modalVideo.removeAttribute("src");
           modalVideo.load();
+        }, 300);
+      }
+
+      // --- 7B. Full Video MODAL LOGIC ---
+      const fullscreenModal = document.getElementById("fullscreen-modal");
+      const fsVideo = document.getElementById("fs-video");
+
+      // ฟังก์ชันเปิดวิดีโอเต็มจอ
+      function openFullscreenVideo() {
+        if (window.innerWidth < 1024) return;
+
+        if (!modalVideo.src) return;
+
+        modalVideo.pause();
+
+        fsVideo.src = modalVideo.src;
+        fsVideo.currentTime = modalVideo.currentTime;
+
+        fsVideo.muted = true;
+
+        fullscreenModal.classList.remove("hidden");
+        void fullscreenModal.offsetWidth;
+        fullscreenModal.classList.remove("opacity-0");
+
+        fsVideo.play().catch((e) => console.log("FS Play blocked:", e));
+      }
+
+      // ฟังก์ชันปิดวิดีโอเต็มจอ
+      function closeFullscreenVideo() {
+        fullscreenModal.classList.add("opacity-0");
+
+        setTimeout(() => {
+          fullscreenModal.classList.add("hidden");
+
+          // 1. หยุดวิดีโอใหญ่ และล้าง Source ทิ้งเพื่อคืน Memory ให้เบราว์เซอร์
+          fsVideo.pause();
+          fsVideo.removeAttribute("src");
+          fsVideo.load();
+
+          // 2. กลับไปเล่นวิดีโอในการ์ดเล็กต่อ
+          modalVideo.play().catch((e) => console.log("Resume blocked:", e));
         }, 300);
       }
 
